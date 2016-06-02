@@ -1,4 +1,4 @@
-#ifndef FXATCLIENT_H_INCLUDE__
+﻿#ifndef FXATCLIENT_H_INCLUDE__
 #define FXATCLIENT_H_INCLUDE__
 
 namespace flowTumn {

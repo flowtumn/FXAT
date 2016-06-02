@@ -1,4 +1,4 @@
-#ifndef DEFINE_H_INCLUDE__
+﻿#ifndef DEFINE_H_INCLUDE__
 #define DEFINE_H_INCLUDE__
 
 #include <cstdlib>

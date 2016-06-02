@@ -1,13 +1,13 @@
-#ifndef RATESTRATEGY_H_INCLUDE__
+ï»¿#ifndef RATESTRATEGY_H_INCLUDE__
 #define RATESTRATEGY_H_INCLUDE__
 
+#include <atomic>
+#include "fx/data/FXInfo.h"
 #include "IFXStrategy.h"
 
 namespace flowTumn {
-	struct FXInfo;
-
 	/**
-	 * ƒŒ[ƒg‚É‚æ‚é”„‚è”ƒ‚¢‚ğŒˆ‚ß‚éB
+	 * ãƒ¬ãƒ¼ãƒˆã«ã‚ˆã‚‹å£²ã‚Šè²·ã„ã‚’æ±ºã‚ã‚‹ã€‚
 	 */
 	class RateStrategy : public flowTumn::IFXStrategy {
 	public:
@@ -20,8 +20,9 @@ namespace flowTumn {
 		bool jedgeSell(double price) const override;
 
 	private:
-		const double rateHight_;
+		const double rateHigh_;
 		const double rateLow_;
+		std::atomic <FXInfo> fxInfo_;
 	};
 };
 

@@ -1,4 +1,4 @@
-set(TEST_PROJECT_NAME ${PROJECT_NAME}-test)
+﻿set(TEST_PROJECT_NAME ${PROJECT_NAME}-test)
 
 set(SOURCES
   test_main.cpp

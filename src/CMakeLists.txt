@@ -1,6 +1,7 @@
-set(SOURCES
+﻿set(SOURCES
   ${PROJECT_SOURCE_DIR}/src/algorithm/IFXStrategy.cpp
   ${PROJECT_SOURCE_DIR}/src/algorithm/RateStrategy.cpp
+  ${PROJECT_SOURCE_DIR}/src/data/FXInfo.cpp
   ${PROJECT_SOURCE_DIR}/src/repository/IFXRepository.cpp
   ${PROJECT_SOURCE_DIR}/src/client/FXATClient.cpp
 )

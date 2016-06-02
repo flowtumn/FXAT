@@ -1,30 +1,30 @@
-#ifndef IFXSTRATEGY_H_INCLUDE__
+ï»¿#ifndef IFXSTRATEGY_H_INCLUDE__
 #define IFXSTRATEGY_H_INCLUDE__
 
 namespace flowTumn {
 	struct FXInfo;
 
 	/**
-	 * ”ƒ‚¢A”„‚è‚ÌStrategyB
+	 * è²·ã„ã€å£²ã‚Šã®Strategyã€‚
 	 */
 	class IFXStrategy {
 	public:
-		// Œ»İ‚Ìî•ñ‚ÅXVB
+		// ç¾åœ¨ã®æƒ…å ±ã§æ›´æ–°ã€‚
 		virtual void update(const FXInfo& info) = 0;
 
-		// ”„‚é‚×‚«High Rate.(í—ª‚É‚æ‚Á‚Ä‚ÍƒŒ[ƒg‚ğˆí’E‚µ‚Ä‚àjudge‚ªŠú‘Ò’Ê‚è‚Ì“š‚¦‚ğ•Ô‚·‚±‚Æ‚Í‚È‚¢‚Å‚ ‚ë‚¤)
+		// å£²ã‚‹ã¹ãHigh Rate.(æˆ¦ç•¥ã«ã‚ˆã£ã¦ã¯ãƒ¬ãƒ¼ãƒˆã‚’é€¸è„±ã—ã¦ã‚‚judgeãŒæœŸå¾…é€šã‚Šã®ç­”ãˆã‚’è¿”ã™ã“ã¨ã¯ãªã„ã§ã‚ã‚ã†)
 		virtual double highRate() const = 0;
 
-		// ”„‚é‚×‚«Low Rate.(í—ª‚É‚æ‚Á‚Ä‚ÍƒŒ[ƒg‚ğˆí’E‚µ‚Ä‚àjudge‚ªŠú‘Ò’Ê‚è‚Ì“š‚¦‚ğ•Ô‚·‚±‚Æ‚Í‚È‚¢‚Å‚ ‚ë‚¤)
+		// å£²ã‚‹ã¹ãLow Rate.(æˆ¦ç•¥ã«ã‚ˆã£ã¦ã¯ãƒ¬ãƒ¼ãƒˆã‚’é€¸è„±ã—ã¦ã‚‚judgeãŒæœŸå¾…é€šã‚Šã®ç­”ãˆã‚’è¿”ã™ã“ã¨ã¯ãªã„ã§ã‚ã‚ã†)
 		virtual double lowRate() const = 0;
 
-		// ‚±‚Ìí—ª‚ÍƒŒ[ƒg‚Ì‹K‘¥‚É]‚¤‚©H
+		// ã“ã®æˆ¦ç•¥ã¯ãƒ¬ãƒ¼ãƒˆã®è¦å‰‡ã«å¾“ã†ã‹ï¼Ÿ
 		virtual bool isObeyRules() const = 0;
 
-		// ”ƒ‚Á‚Ä‚à—Ç‚¢‚©H
+		// è²·ã£ã¦ã‚‚è‰¯ã„ã‹ï¼Ÿ
 		virtual bool judgeBuy() const = 0;
 
-		// ”„‚Á‚Ä‚à—Ç‚¢‚©H
+		// å£²ã£ã¦ã‚‚è‰¯ã„ã‹ï¼Ÿ
 		virtual bool jedgeSell(double price) const = 0;
 	};
 };
