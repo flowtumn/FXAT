@@ -12,11 +12,20 @@ namespace flowTumn {
 		// 現在の情報で更新。
 		virtual void update(const FXInfo& info) = 0;
 
+		// 売るべきHigh Rate.(戦略によってはレートを逸脱してもjudgeが期待通りの答えを返すことはないであろう)
+		virtual double highRate() const = 0;
+
+		// 売るべきLow Rate.(戦略によってはレートを逸脱してもjudgeが期待通りの答えを返すことはないであろう)
+		virtual double lowRate() const = 0;
+
+		// この戦略はレートの規則に従うか？
+		virtual bool isObeyRules() const = 0;
+
 		// 買っても良いか？
-		virtual bool judgeBuy() = 0;
+		virtual bool judgeBuy() const = 0;
 
 		// 売っても良いか？
-		virtual bool jedgeSell(double price) = 0;
+		virtual bool jedgeSell(double price) const = 0;
 	};
 };
 

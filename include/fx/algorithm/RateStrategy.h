@@ -10,9 +10,18 @@ namespace flowTumn {
 	 * ƒŒ[ƒg‚É‚æ‚é”„‚è”ƒ‚¢‚ğŒˆ‚ß‚éB
 	 */
 	class RateStrategy : public flowTumn::IFXStrategy {
+	public:
+		RateStrategy(double rateHigh, double rateLow);
 		void update(const FXInfo& info) override;
-		bool judgeBuy() override;
-		bool jedgeSell(double price) override;
+		double highRate() const override;
+		double lowRate() const override;
+		bool isObeyRules() const override;
+		bool judgeBuy() const override;
+		bool jedgeSell(double price) const override;
+
+	private:
+		const double rateHight_;
+		const double rateLow_;
 	};
 };
 
