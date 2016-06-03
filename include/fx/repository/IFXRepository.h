@@ -1,16 +1,16 @@
-#ifndef IFXREPOSITORY_H_INCLUDE__
+ï»¿#ifndef IFXREPOSITORY_H_INCLUDE__
 #define IFXREPOSITORY_H_INCLUDE__
 
 namespace flowTumn {
 	/**
-	 * ”„”ƒ‹L˜^‚ğs‚¤Repository
+	 * å£²è²·è¨˜éŒ²ã‚’è¡Œã†Repository
 	 */
 	class IFXRepository {
 	public:
-		// ”ƒ‚Á‚½B
+		// è²·ã£ãŸã€‚
 		virtual void bought(double rate) = 0;
 
-		// ”„‚Á‚½B
+		// å£²ã£ãŸã€‚
 		virtual void sold(double rate) = 0;
 	};
 };

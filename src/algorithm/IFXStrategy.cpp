@@ -1,1 +1,1 @@
-#include "fx/algorithm/IFXStrategy.h"
+﻿#include "fx/algorithm/IFXStrategy.h"
