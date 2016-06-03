@@ -4,6 +4,7 @@
   ${PROJECT_SOURCE_DIR}/src/algorithm/LearningStrategy.cpp
   ${PROJECT_SOURCE_DIR}/src/data/FXInfo.cpp
   ${PROJECT_SOURCE_DIR}/src/repository/IFXRepository.cpp
+  ${PROJECT_SOURCE_DIR}/src/client/EvaluateStrategyClient.cpp
   ${PROJECT_SOURCE_DIR}/src/client/FXATClient.cpp
 )
 

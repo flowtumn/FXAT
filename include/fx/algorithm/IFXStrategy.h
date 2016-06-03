@@ -38,7 +38,7 @@ namespace flowTumn {
 		virtual bool judgeBuy() const = 0;
 
 		// 売っても良いか？
-		virtual SellResult jedgeSell(double price) const = 0;
+		virtual SellResult jedgeSell(double ask) const = 0;
 	};
 };
 

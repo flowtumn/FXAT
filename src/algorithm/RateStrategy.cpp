@@ -35,17 +35,27 @@ bool RateStrategy::judgeBuy() const {
 
 //askを買値とした場合、売るべきか？
 IFXStrategy::SellResult RateStrategy::jedgeSell(double ask) const {
+	//現在の目安となる売値。
 	const auto nowBidRate = this->fxInfo_.load().bid;
-	const auto h = nowBidRate * this->rateHigh_;
-	const auto l = nowBidRate * this->rateLow_;
-	const auto nh = nowBidRate + h;
-	const auto nl = nowBidRate - l;
 
-	//現在レートから High or Low なら売り。
-	if (nh <= ask) {
-		return IFXStrategy::SellResult::OverHighRate;
-	} else if (nl >= ask) {
-		return IFXStrategy::SellResult::OverLowRate;
+	if (nowBidRate < ask) {
+		// 買値より下がってる。
+		auto diff = ask - nowBidRate;
+		auto l = ask * this->rateLow_;
+
+		//最低レートを下回った、損切りすべき。
+		if (l <= diff) {
+			return IFXStrategy::SellResult::OverLowRate;
+		}
+	} else {
+		// 買値より高い。
+		auto diff = nowBidRate - ask;
+		auto h = ask * this->rateHigh_;
+
+		//最大レートを上まった、問答無用で売る。
+		if (h <= diff) {
+			return IFXStrategy::SellResult::OverHighRate;
+		}
 	}
 
 	return IFXStrategy::SellResult::None;
