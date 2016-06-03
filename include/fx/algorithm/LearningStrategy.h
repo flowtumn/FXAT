@@ -26,7 +26,7 @@ namespace flowTumn {
 		void learning(const FXInfo& info) override;
 		void updateBidAsk(const FXBidAsk& info) override;
 		bool isObeyRules() const override;
-		bool judgeBuy() const override;
+		bool judgeBuy(double ask) const override;
 		IFXStrategy::SellResult jedgeSell(double ask) const override;
 
 		/**
