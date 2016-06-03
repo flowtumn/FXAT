@@ -18,7 +18,7 @@ namespace flowTumn {
 		double highRate() const override;
 		double lowRate() const override;
 		bool isObeyRules() const override;
-		bool judgeBuy() const override;
+		bool judgeBuy(double ask) const override;
 		IFXStrategy::SellResult jedgeSell(double ask) const override;
 
 	protected:

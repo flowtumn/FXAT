@@ -42,7 +42,7 @@ bool LearningStrategy::isObeyRules() const {
 	return false;
 }
 
-bool LearningStrategy::judgeBuy() const {
+bool LearningStrategy::judgeBuy(double ask) const {
 	//過去を参考に今買うべきなのかを判断。
 	return false;
 }

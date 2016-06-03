@@ -40,7 +40,7 @@ namespace flowTumn {
 			default:
 				break;
 			case State::Buy:
-				if (this->strategy_.judgeBuy()) {
+				if (this->strategy_.judgeBuy(info.ask)) {
 					//買い。
 					this->boughtRate_ = info.ask;
 					++this->counterBuy_;

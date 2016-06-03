@@ -8,7 +8,7 @@ RateStrategy::RateStrategy(double rateHigh, double rateLow)
 	, rateLow_(rateLow / 100.0)
 {}
 
-void RateStrategy::learning(const FXInfo& info) {
+void RateStrategy::learning(const FXInfo&) {
 }
 
 void RateStrategy::updateBidAsk(const FXBidAsk& info) {
@@ -29,32 +29,32 @@ bool RateStrategy::isObeyRules() const {
 }
 
 //Rateで売る事が重視するので、買うタイミングはいつでも良い。
-bool RateStrategy::judgeBuy() const {
+bool RateStrategy::judgeBuy(double) const {
 	return true;
 }
 
 //askを買値とした場合、売るべきか？
 IFXStrategy::SellResult RateStrategy::jedgeSell(double ask) const {
+
 	//現在の目安となる売値。
 	const auto nowBidRate = this->fxInfo_.load().bid;
 
-	if (nowBidRate < ask) {
-		// 買値より下がってる。
-		auto diff = ask - nowBidRate;
-		auto l = ask * this->rateLow_;
-
-		//最低レートを下回った、損切りすべき。
-		if (l <= diff) {
-			return IFXStrategy::SellResult::OverLowRate;
-		}
-	} else {
-		// 買値より高い。
+	//買値より売値は高い。
+	if (nowBidRate >= ask) {
 		auto diff = nowBidRate - ask;
 		auto h = ask * this->rateHigh_;
 
-		//最大レートを上まった、問答無用で売る。
-		if (h <= diff) {
+		//売った時の差が、計算した利益を超えるなら売り。
+		if (diff >= h) {
 			return IFXStrategy::SellResult::OverHighRate;
+		}
+	} else {
+		auto diff = ask - nowBidRate;
+		auto l = ask * this->rateLow_;
+
+		//売った時の差が、計算した損益を超えるなら売り。
+		if (diff <= l) {
+			return IFXStrategy::SellResult::OverLowRate;
 		}
 	}
 

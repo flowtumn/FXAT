@@ -20,8 +20,8 @@
 #endif
 
 namespace {
-	const auto SIMULATION_HIGH_RATE = 0.3;
-	const auto SIMULATION_LOW_RATE = 0.3;
+	const auto SIMULATION_HIGH_RATE = 1.00;
+	const auto SIMULATION_LOW_RATE = 3.00;
 	const auto RATE_OPEN = 1;
 	const auto RATE_LOW = 2;
 	const auto RATE_HIGH = 3;
