@@ -8,7 +8,10 @@ RateStrategy::RateStrategy(double rateHigh, double rateLow)
 	, rateLow_(rateLow / 100.0)
 {}
 
-void RateStrategy::update(const FXInfo& info){
+void RateStrategy::learning(const FXInfo& info) {
+}
+
+void RateStrategy::updateBidAsk(const FXBidAsk& info) {
 	this->fxInfo_.store(info);
 }
 
@@ -30,20 +33,20 @@ bool RateStrategy::judgeBuy() const {
 	return true;
 }
 
-//priceを買値とした場合、売るべきか？
-bool RateStrategy::jedgeSell(double price) const {
-	const auto nowRate = this->fxInfo_.load().rateCurrent;
-	const auto h = nowRate * this->rateHigh_;
-	const auto l = nowRate * this->rateLow_;
-	const auto nh = nowRate + h;
-	const auto nl = nowRate - l;
+//askを買値とした場合、売るべきか？
+IFXStrategy::SellResult RateStrategy::jedgeSell(double ask) const {
+	const auto nowBidRate = this->fxInfo_.load().bid;
+	const auto h = nowBidRate * this->rateHigh_;
+	const auto l = nowBidRate * this->rateLow_;
+	const auto nh = nowBidRate + h;
+	const auto nl = nowBidRate - l;
 
 	//現在レートから High or Low なら売り。
-	if (nh <= price) {
-		return true;
-	} else if (nl >= price) {
-		return true;
+	if (nh <= ask) {
+		return IFXStrategy::SellResult::OverHighRate;
+	} else if (nl >= ask) {
+		return IFXStrategy::SellResult::OverLowRate;
 	}
 
-	return false;
+	return IFXStrategy::SellResult::None;
 }
