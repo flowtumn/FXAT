@@ -1,6 +1,9 @@
 ﻿#ifndef IFXREPOSITORY_H_INCLUDE__
 #define IFXREPOSITORY_H_INCLUDE__
 
+#include <cstdint>
+#include <string>
+
 namespace flowTumn {
 	/**
 	 * 売買記録を行うRepository
@@ -8,10 +11,10 @@ namespace flowTumn {
 	class IFXRepository {
 	public:
 		// 買った。
-		virtual void bought(double rate) = 0;
+		virtual void bought(double rate, uint32_t tm, const std::string& description) = 0;
 
 		// 売った。
-		virtual void sold(double rate) = 0;
+		virtual void sold(double rate, uint32_t tm, const std::string& description) = 0;
 	};
 };
 

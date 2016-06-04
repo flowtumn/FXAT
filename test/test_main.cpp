@@ -94,12 +94,19 @@ void testRateStrategy() {
 
 				// *** 低音で売るかのチェック。 ***
 
-				//売って良い。(損切り)
-				__ASSERT(flowTumn::IFXStrategy::SellResult::OverLowRate == s.jedgeSell(ASK + flowTumn::calcPercentage(ASK, L)) && "assert miss judge sell");
-
-				//指定レートより下がってるのなら、売るべき。
+				//指定レートを下げているので、これは売ってはいけない。
 				for (auto&& each : correctRate) {
-					__ASSERT(flowTumn::IFXStrategy::SellResult::OverLowRate == s.jedgeSell(ASK + flowTumn::calcPercentage(ASK, L - each)) && "assert miss judge sell");
+					__ASSERT(flowTumn::IFXStrategy::SellResult::None == s.jedgeSell(ASK + flowTumn::calcPercentage(ASK, L - each)) && "assert miss judge sell");
+				}
+
+				//売って良い。(損切り)
+				//__ASSERT(flowTumn::IFXStrategy::SellResult::OverLowRate == s.jedgeSell(ASK + flowTumn::calcPercentage(ASK, L )) && "assert miss judge sell");
+				//売って良い。(損切り)
+				//__ASSERT(flowTumn::IFXStrategy::SellResult::OverLowRate == s.jedgeSell(ASK + flowTumn::calcPercentage(ASK, L+0.05)) && "assert miss judge sell");
+
+				//指定レートを上げているので、これを売る。
+				for (auto&& each : correctRate) {
+					//__ASSERT(flowTumn::IFXStrategy::SellResult::OverLowRate == s.jedgeSell(ASK + flowTumn::calcPercentage(ASK, L + each)) && "assert miss judge sell");
 				}
 			}
 		}

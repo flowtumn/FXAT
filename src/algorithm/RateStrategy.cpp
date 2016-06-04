@@ -41,19 +41,17 @@ IFXStrategy::SellResult RateStrategy::jedgeSell(double ask) const {
 
 	//買値より売値は高い。
 	if (nowBidRate >= ask) {
-		auto diff = nowBidRate - ask;
-		auto h = ask * this->rateHigh_;
+		auto h = ask * (this->rateHigh_ + 1.0);
 
 		//売った時の差が、計算した利益を超えるなら売り。
-		if (diff >= h) {
+		if (nowBidRate >= h) {
 			return IFXStrategy::SellResult::OverHighRate;
 		}
 	} else {
-		auto diff = ask - nowBidRate;
-		auto l = ask * this->rateLow_;
+		auto l = ask - (ask * this->rateLow_);
 
 		//売った時の差が、計算した損益を超えるなら売り。
-		if (diff <= l) {
+		if (nowBidRate <= l) {
 			return IFXStrategy::SellResult::OverLowRate;
 		}
 	}
