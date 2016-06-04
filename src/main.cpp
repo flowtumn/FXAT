@@ -93,12 +93,13 @@ void simulation(const flowTumn::tstr& csv, double H, double L) {
 		}
 
 		void bought(double rate, uint32_t, const std::string& description) override {
-			this->updateRecord(rate, description);
+			this->updateRecord(0.0, description);
+			this->boughtRate_ = rate;
 			//std::cout << "[B] " << rate << "  " << description << std::endl;
 		}
 
 		void sold(double rate, uint32_t, const std::string& description) override {
-			this->updateRecord(rate * -1.0, description);
+			this->updateRecord(rate - this->boughtRate_, description);
 			//std::cout << "[S] " << rate << "  " << description << std::endl;
 		}
 
@@ -113,7 +114,7 @@ void simulation(const flowTumn::tstr& csv, double H, double L) {
 		}
 
 	private:
-
+		double boughtRate_;
 		std::unordered_map <std::string, std::tuple <int64_t, double>> record_;
 	};
 
