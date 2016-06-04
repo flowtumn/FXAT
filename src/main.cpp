@@ -1,5 +1,6 @@
 ﻿#include <array>
 #include <iostream>
+#include <map>
 #include <tuple>
 #include <functional>
 #include <fstream>
@@ -21,10 +22,6 @@
 #endif
 
 namespace {
-	//売るべきレート
-	const auto SIMULATION_HIGH_RATE = 2.0;
-	const auto SIMULATION_LOW_RATE = 2.0;
-
 	//スプレッド(5銭)
 	const auto BID_SPREAD = 0.05;
 
@@ -75,7 +72,7 @@ flowTumn::FXInfo convert(const std::string& s) {
 /**
  * 過去のデータを用いてsimulationを実施する。
  */
-void simulation(const flowTumn::tstr& csv) {
+void simulation(const flowTumn::tstr& csv, double H, double L) {
 
 	struct simulationRepository : flowTumn::IFXRepository {
 		std::string convDate(const std::string& s) {
@@ -106,7 +103,8 @@ void simulation(const flowTumn::tstr& csv) {
 		}
 
 		void dumpRecord() {
-			for (auto&& each : this->record_) {
+			std::map<std::string, std::tuple <int64_t, double>> ordered(record_.begin(), record_.end());
+			for (auto&& each : ordered) {
 				int64_t v;
 				double total;
 				std::tie(v, total) = each.second;
@@ -122,11 +120,12 @@ void simulation(const flowTumn::tstr& csv) {
 	flowTumn::EvaluateStrategyClient <
 		flowTumn::RateStrategy,
 		simulationRepository
-	> evaluate(SIMULATION_HIGH_RATE, SIMULATION_LOW_RATE);
+	> evaluate(H, L);
 
 	std::ifstream iif(csv);
 
 	if (iif.good()) {
+		evaluate.info();
 		while (!iif.eof()) {
 			std::string lineBuffer;
 			if (std::getline(iif, lineBuffer)) {
@@ -153,8 +152,8 @@ void simulation(const flowTumn::tstr& csv) {
 
 int _tmain(int argc, flowTumn::tstr::value_type** argv) {
 
-	if (2 == argc) {
-		simulation(argv[1]);
+	if (4 == argc) {
+		simulation(argv[1], flowTumn::toDouble(argv[2]), flowTumn::toDouble(argv[3]));
 	}
 
 	return 0;

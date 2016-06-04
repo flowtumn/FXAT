@@ -37,6 +37,11 @@ namespace flowTumn {
 			return this->repository_;
 		}
 
+		void info() const {
+			std::cout << "HighRate: " << this->strategy_.highRate() << std::endl;
+			std::cout << " LowRate: " << this->strategy_.lowRate() << std::endl;
+		}
+
 		// この高値/売値を用いて、戦略を扱い、売り・買いを実行する。
 		void simulation(const flowTumn::FXBidAsk& info, const std::string& description) {
 			//更新。
