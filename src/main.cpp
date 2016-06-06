@@ -105,12 +105,15 @@ void simulation(const flowTumn::tstr& csv, double H, double L) {
 
 		void dumpRecord() {
 			std::map<std::string, std::tuple <int64_t, double>> ordered(record_.begin(), record_.end());
+			double r{ 0.0 };
 			for (auto&& each : ordered) {
 				int64_t v;
 				double total;
+				r += total;
 				std::tie(v, total) = each.second;
 				std::cout << each.first << ": " << " numberTimes: " << v << "   profit: " << total << std::endl;
 			}
+			std::cout << "Profit:  " << r << std::endl;
 		}
 
 	private:
