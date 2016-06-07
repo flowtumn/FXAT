@@ -17,12 +17,6 @@
   #define __ASSERT(x) assertR(x)
 #endif
 
-namespace flowTumn {
-	inline double calcPercentage(double base, double percent) {
-		return base * (percent / 100.0);
-	}
-};
-
 void rate() {
 	const auto H = 0.1;
 	const auto L = 0.2;
@@ -72,47 +66,41 @@ void rate() {
 	__ASSERT(flowTumn::IFXStrategy::SellResult::OverLowRate == s.jedgeSell(100.000 * (1.0 + L + 0.0000000000001)) && "assert judge sell in the currentRate.");
 	__ASSERT(flowTumn::IFXStrategy::SellResult::None == s.jedgeSell(100.000 * (1.0 + L - 0.1)) && "assert judge sell in the currentRate.");
 
+
 	__ASSERT(flowTumn::IFXStrategy::SellResult::None == s.jedgeSell(100.000 * (1.0 - H + 0.1)) && "assert judge sell in the currentRate.");
+	__ASSERT(flowTumn::IFXStrategy::SellResult::None == s.jedgeSell(100.000 * (1.0 - H + 0.01)) && "assert judge sell in the currentRate.");
 	__ASSERT(flowTumn::IFXStrategy::SellResult::None == s.jedgeSell(100.000 * (1.0 - H + 0.001)) && "assert judge sell in the currentRate.");
 	__ASSERT(flowTumn::IFXStrategy::SellResult::None == s.jedgeSell(100.000 * (1.0 - H + 0.0001)) && "assert judge sell in the currentRate.");
 	__ASSERT(flowTumn::IFXStrategy::SellResult::None == s.jedgeSell(100.000 * (1.0 - H + 0.00001)) && "assert judge sell in the currentRate.");
 	__ASSERT(flowTumn::IFXStrategy::SellResult::None == s.jedgeSell(100.000 * (1.0 - H + 0.000001)) && "assert judge sell in the currentRate.");
 	__ASSERT(flowTumn::IFXStrategy::SellResult::None == s.jedgeSell(100.000 * (1.0 - H + 0.0000001)) && "assert judge sell in the currentRate.");
+	__ASSERT(flowTumn::IFXStrategy::SellResult::None == s.jedgeSell(100.000 * (1.0 - H + 0.00000001)) && "assert judge sell in the currentRate.");
+	__ASSERT(flowTumn::IFXStrategy::SellResult::None == s.jedgeSell(100.000 * (1.0 - H + 0.000000001)) && "assert judge sell in the currentRate.");
+	__ASSERT(flowTumn::IFXStrategy::SellResult::None == s.jedgeSell(100.000 * (1.0 - H + 0.0000000001)) && "assert judge sell in the currentRate.");
+	__ASSERT(flowTumn::IFXStrategy::SellResult::None == s.jedgeSell(100.000 * (1.0 - H + 0.00000000001)) && "assert judge sell in the currentRate.");
+	__ASSERT(flowTumn::IFXStrategy::SellResult::None == s.jedgeSell(100.000 * (1.0 - H + 0.000000000001)) && "assert judge sell in the currentRate.");
+	__ASSERT(flowTumn::IFXStrategy::SellResult::None == s.jedgeSell(100.000 * (1.0 - H + 0.0000000000001)) && "assert judge sell in the currentRate.");
+	__ASSERT(flowTumn::IFXStrategy::SellResult::None == s.jedgeSell(100.000 * (1.0 - H + 0.00000000000001)) && "assert judge sell in the currentRate.");
+	__ASSERT(flowTumn::IFXStrategy::SellResult::None == s.jedgeSell(100.000 * (1.0 - H + 0.000000000000001)) && "assert judge sell in the currentRate.");
+	__ASSERT(flowTumn::IFXStrategy::SellResult::None == s.jedgeSell(100.000 * (1.0 - H + 0.0000000000000001)) && "assert judge sell in the currentRate.");
 
-	__ASSERT(flowTumn::IFXStrategy::SellResult::None == s.jedgeSell(99.000 - (99.000 * (H - 0.01))) && "assert judge sell in the currentRate.");
-	__ASSERT(flowTumn::IFXStrategy::SellResult::None == s.jedgeSell(99.000 - (99.000 * (H - 0.001))) && "assert judge sell in the currentRate.");
-	__ASSERT(flowTumn::IFXStrategy::SellResult::None == s.jedgeSell(99.000 - (99.000 * (H - 0.0001))) && "assert judge sell in the currentRate.");
-	__ASSERT(flowTumn::IFXStrategy::SellResult::None == s.jedgeSell(99.000 - (99.000 * (H - 0.00001))) && "assert judge sell in the currentRate.");
-	__ASSERT(flowTumn::IFXStrategy::SellResult::None == s.jedgeSell(99.000 - (99.000 * (H - 0.000001))) && "assert judge sell in the currentRate.");
-	__ASSERT(flowTumn::IFXStrategy::SellResult::None == s.jedgeSell(99.000 - (99.000 * (H - 0.0000001))) && "assert judge sell in the currentRate.");
-
-	__ASSERT(flowTumn::IFXStrategy::SellResult::OverHighRate == s.jedgeSell(99.000 - (99.000 * (H + 1.0))) && "assert judge sell in the currentRate.");
-	__ASSERT(flowTumn::IFXStrategy::SellResult::OverHighRate == s.jedgeSell(99.000 - (99.000 * (H + 0.1))) && "assert judge sell in the currentRate.");
-	__ASSERT(flowTumn::IFXStrategy::SellResult::OverHighRate == s.jedgeSell(99.000 - (99.000 * (H + 0.01))) && "assert judge sell in the currentRate.");
-	__ASSERT(flowTumn::IFXStrategy::SellResult::OverHighRate == s.jedgeSell(99.000 - (99.000 * (H + 0.001))) && "assert judge sell in the currentRate.");
-	__ASSERT(flowTumn::IFXStrategy::SellResult::OverHighRate == s.jedgeSell(99.000 - (99.000 * (H + 0.0001))) && "assert judge sell in the currentRate.");
-	__ASSERT(flowTumn::IFXStrategy::SellResult::OverHighRate == s.jedgeSell(99.000 - (99.000 * (H + 0.00001))) && "assert judge sell in the currentRate.");
-	__ASSERT(flowTumn::IFXStrategy::SellResult::OverHighRate == s.jedgeSell(99.000 - (99.000 * (H + 0.000001))) && "assert judge sell in the currentRate.");
-	__ASSERT(flowTumn::IFXStrategy::SellResult::OverHighRate == s.jedgeSell(99.000 - (99.000 * (H + 0.0000001))) && "assert judge sell in the currentRate.");
-	__ASSERT(flowTumn::IFXStrategy::SellResult::OverHighRate == s.jedgeSell(99.000 - (99.000 * (H + 0.00000001))) && "assert judge sell in the currentRate.");
-	__ASSERT(flowTumn::IFXStrategy::SellResult::OverHighRate == s.jedgeSell(99.000 - (99.000 * (H + 0.000000001))) && "assert judge sell in the currentRate.");
-	__ASSERT(flowTumn::IFXStrategy::SellResult::OverHighRate == s.jedgeSell(99.000 - (99.000 * (H + 0.0000000001))) && "assert judge sell in the currentRate.");
-	__ASSERT(flowTumn::IFXStrategy::SellResult::OverHighRate == s.jedgeSell(98.999) && "assert judge sell in the currentRate.");
-
-	__ASSERT(flowTumn::IFXStrategy::SellResult::None == s.jedgeSell(101.999) && "assert judge sell in the currentRate.");
-	__ASSERT(flowTumn::IFXStrategy::SellResult::OverLowRate == s.jedgeSell(102.000) && "assert judge sell in the currentRate.");
-	__ASSERT(flowTumn::IFXStrategy::SellResult::OverLowRate == s.jedgeSell(102.001) && "assert judge sell in the currentRate.");
-
-	__ASSERT(flowTumn::IFXStrategy::SellResult::None == s.jedgeSell(98.001) && "assert judge sell in the currentRate.");
-
-	__ASSERT(flowTumn::IFXStrategy::SellResult::None == s.jedgeSell(ASK - (ASK * (H - 0.1))) && "assert judge sell in the currentRate.");
-	__ASSERT(flowTumn::IFXStrategy::SellResult::OverHighRate == s.jedgeSell(ASK - (ASK * H)) && "assert judge sell in the currentRate.");
-	__ASSERT(flowTumn::IFXStrategy::SellResult::None== s.jedgeSell(ASK - (ASK * (H + 0.1))) && "assert judge sell in the currentRate.");
-	__ASSERT(flowTumn::IFXStrategy::SellResult::None == s.jedgeSell(ASK - (ASK * 0.1115)) && "assert judge sell in the currentRate.");
-	__ASSERT(flowTumn::IFXStrategy::SellResult::None == s.jedgeSell(ASK - (ASK * (H - 0.0001))) && "assert judge sell in the currentRate.");
-	__ASSERT(flowTumn::IFXStrategy::SellResult::None == s.jedgeSell(ASK - (ASK * (H - 0.00001))) && "assert judge sell in the currentRate.");
-	__ASSERT(flowTumn::IFXStrategy::SellResult::None == s.jedgeSell(ASK - (ASK * (H - 0.000001))) && "assert judge sell in the currentRate.");
-	__ASSERT(flowTumn::IFXStrategy::SellResult::None == s.jedgeSell(ASK - (ASK * H)) && "assert judge sell in the currentRate.");
+	__ASSERT(flowTumn::IFXStrategy::SellResult::OverHighRate == s.jedgeSell(100.000 * (1.0 - H)) && "assert judge sell in the currentRate.");
+	__ASSERT(flowTumn::IFXStrategy::SellResult::OverHighRate == s.jedgeSell(100.000 * (1.0 - H - 0.1)) && "assert judge sell in the currentRate.");
+	__ASSERT(flowTumn::IFXStrategy::SellResult::OverHighRate == s.jedgeSell(100.000 * (1.0 - H - 0.01)) && "assert judge sell in the currentRate.");
+	__ASSERT(flowTumn::IFXStrategy::SellResult::OverHighRate == s.jedgeSell(100.000 * (1.0 - H - 0.001)) && "assert judge sell in the currentRate.");
+	__ASSERT(flowTumn::IFXStrategy::SellResult::OverHighRate == s.jedgeSell(100.000 * (1.0 - H - 0.0001)) && "assert judge sell in the currentRate.");
+	__ASSERT(flowTumn::IFXStrategy::SellResult::OverHighRate == s.jedgeSell(100.000 * (1.0 - H - 0.00001)) && "assert judge sell in the currentRate.");
+	__ASSERT(flowTumn::IFXStrategy::SellResult::OverHighRate == s.jedgeSell(100.000 * (1.0 - H - 0.000001)) && "assert judge sell in the currentRate.");
+	__ASSERT(flowTumn::IFXStrategy::SellResult::OverHighRate == s.jedgeSell(100.000 * (1.0 - H - 0.0000001)) && "assert judge sell in the currentRate.");
+	__ASSERT(flowTumn::IFXStrategy::SellResult::OverHighRate == s.jedgeSell(100.000 * (1.0 - H - 0.00000001)) && "assert judge sell in the currentRate.");
+	__ASSERT(flowTumn::IFXStrategy::SellResult::OverHighRate == s.jedgeSell(100.000 * (1.0 - H - 0.000000001)) && "assert judge sell in the currentRate.");
+	__ASSERT(flowTumn::IFXStrategy::SellResult::OverHighRate == s.jedgeSell(100.000 * (1.0 - H - 0.0000000001)) && "assert judge sell in the currentRate.");
+	__ASSERT(flowTumn::IFXStrategy::SellResult::OverHighRate == s.jedgeSell(100.000 * (1.0 - H - 0.00000000001)) && "assert judge sell in the currentRate.");
+	__ASSERT(flowTumn::IFXStrategy::SellResult::OverHighRate == s.jedgeSell(100.000 * (1.0 - H - 0.000000000001)) && "assert judge sell in the currentRate.");
+	__ASSERT(flowTumn::IFXStrategy::SellResult::OverHighRate == s.jedgeSell(100.000 * (1.0 - H - 0.0000000000001)) && "assert judge sell in the currentRate.");
+	__ASSERT(flowTumn::IFXStrategy::SellResult::OverHighRate == s.jedgeSell(100.000 * (1.0 - H - 0.00000000000001)) && "assert judge sell in the currentRate.");
+	__ASSERT(flowTumn::IFXStrategy::SellResult::OverHighRate == s.jedgeSell(100.000 * (1.0 - H - 0.000000000000001)) && "assert judge sell in the currentRate.");
+	__ASSERT(flowTumn::IFXStrategy::SellResult::OverHighRate == s.jedgeSell(100.000 * (1.0 - H - 0.0000000000000001)) && "assert judge sell in the currentRate.");
 }
 
 //Rateで売りを判断する戦略のテスト。
@@ -141,10 +129,21 @@ void testRateStrategy() {
 
 	//テストで使用する境界値用レート。
 	const std::vector <double> correctRate{
-		0.03,
-		0.05,
-		0.07,
-		0.09,
+//		0.1,
+//		0.01,
+//		0.001,
+		0.0001,
+		0.00001,
+		0.000001,
+		0.0000001,
+		0.00000001,
+		0.000000001,
+		0.0000000001,
+		0.00000000001,
+		0.000000000001,
+		0.0000000000001,
+		0.00000000000001,
+		0.000000000000001,
 	};
 
 	for (auto&& eachH : testRate) {
@@ -162,7 +161,7 @@ void testRateStrategy() {
 			__ASSERT(true == s.judgeBuy(L) && "assert judge Buy.");
 
 			//現値が80.0～130.0でテストを行う。
-			for (auto i = 80.00; i <= 130.00; i += 0.01) {
+			for (auto i = 80.05; i <= 130.00; i += 0.01) {
 				auto v = flowTumn::factoryFXBid(i);
 
 				//この値段で買ったとする。
@@ -174,47 +173,45 @@ void testRateStrategy() {
 				//現値では売らない。
 				__ASSERT(flowTumn::IFXStrategy::SellResult::None == s.jedgeSell(ASK) && "assert judge sell in the currentRate.");
 
-				//境界
-				__ASSERT(flowTumn::IFXStrategy::SellResult::None == s.jedgeSell(ASK - (ASK * eachH)) && "assert judge sell in the currentRate.");
-				__ASSERT(flowTumn::IFXStrategy::SellResult::None == s.jedgeSell(ASK - (ASK * (eachH + 0.001))) && "assert judge sell in the currentRate.");
-				__ASSERT(flowTumn::IFXStrategy::SellResult::None == s.jedgeSell(ASK - (ASK * (eachH - 0.001))) && "assert judge sell in the currentRate.");
-				__ASSERT(flowTumn::IFXStrategy::SellResult::None == s.jedgeSell(ASK - (ASK * (H + 0.01))) && "assert judge sell in the currentRate.");
+				////////////////////////////////////
+				// 売りのテスト
+				////////
 
-				__ASSERT(flowTumn::IFXStrategy::SellResult::None == s.jedgeSell(ASK - (ASK * (H+ 0.01))) && "assert judge sell in the currentRate.");
-
-				__ASSERT(flowTumn::IFXStrategy::SellResult::None == s.jedgeSell(ASK - (ASK * (H + 0.001))) && "assert judge sell in the currentRate.");
-				__ASSERT(flowTumn::IFXStrategy::SellResult::None == s.jedgeSell(ASK - (ASK * (H - 0.001))) && "assert judge sell in the currentRate.");
-				__ASSERT(flowTumn::IFXStrategy::SellResult::None == s.jedgeSell(ASK - (ASK * (H - 0.0001))) && "assert judge sell in the currentRate.");
-
-
-				__ASSERT(flowTumn::IFXStrategy::SellResult::None == s.jedgeSell(ASK - (ASK * (H + 0.0001))) && "assert judge sell in the currentRate.");
-				// *** 高値で売るかのチェック。 ***
-
-				__ASSERT(flowTumn::IFXStrategy::SellResult::OverHighRate == s.jedgeSell(ASK - 20) && "assert judge sell in the currentRate.");
-
-				// これは売り。
-				__ASSERT(flowTumn::IFXStrategy::SellResult::OverHighRate == s.jedgeSell(ASK - flowTumn::calcPercentage(ASK, H)) && "assert miss judge sell");
-
-				// レート以上は売る。
+				//境界(売ってはダメ)
+				//(HighRateをやや減らしているため)
 				for (auto&& each : correctRate) {
-					__ASSERT(flowTumn::IFXStrategy::SellResult::OverHighRate == s.jedgeSell(ASK - flowTumn::calcPercentage(ASK, H + each)) && "assert miss judge sell");
+					__ASSERT(flowTumn::IFXStrategy::SellResult::None== s.jedgeSell(ASK * (1.0 - H + each)) && "assert judge sell in the currentRate.");
 				}
 
-				// *** 低音で売るかのチェック。 ***
+				//売ってよい
+				__ASSERT(flowTumn::IFXStrategy::SellResult::OverHighRate== s.jedgeSell(ASK * (1.0 - H)) && "assert judge sell in the currentRate.");
 
-				//指定レートを下げているので、これは売ってはいけない。
+				//HigtRateを大きくしているので、これも当然売ってよい。
 				for (auto&& each : correctRate) {
-					__ASSERT(flowTumn::IFXStrategy::SellResult::None == s.jedgeSell(ASK + flowTumn::calcPercentage(ASK, L - each)) && "assert miss judge sell");
+					__ASSERT(flowTumn::IFXStrategy::SellResult::OverHighRate == s.jedgeSell(ASK * (1.0 - H - each)) && "assert judge sell in the currentRate.");
 				}
 
-				//売って良い。(損切り)
-				//__ASSERT(flowTumn::IFXStrategy::SellResult::OverLowRate == s.jedgeSell(ASK + flowTumn::calcPercentage(ASK, L )) && "assert miss judge sell");
-				//売って良い。(損切り)
-				//__ASSERT(flowTumn::IFXStrategy::SellResult::OverLowRate == s.jedgeSell(ASK + flowTumn::calcPercentage(ASK, L+0.05)) && "assert miss judge sell");
+				////////////////////////////////////
+				// 買いのテスト
+				////////
 
-				//指定レートを上げているので、これを売る。
+				//境界(売っはダメ)
+				//(LowRateをやや減らしているため)
 				for (auto&& each : correctRate) {
-					//__ASSERT(flowTumn::IFXStrategy::SellResult::OverLowRate == s.jedgeSell(ASK + flowTumn::calcPercentage(ASK, L + each)) && "assert miss judge sell");
+					__ASSERT(flowTumn::IFXStrategy::SellResult::None == s.jedgeSell(ASK * (1.0 + L - each)) && "assert judge sell in the currentRate.");
+				}
+
+				//損切してよい。
+				switch (s.jedgeSell(ASK * (1.0 + L))) {
+				case flowTumn::IFXStrategy::SellResult::None:
+					s.jedgeSell(ASK * (1.0 + L));
+					break;
+				}
+				__ASSERT(flowTumn::IFXStrategy::SellResult::OverLowRate== s.jedgeSell(ASK * (1.0 + L)) && "assert judge sell in the currentRate.");
+
+				//LowRateを大きくしているので、これも当然売ってよい。
+				for (auto&& each : correctRate) {
+					__ASSERT(flowTumn::IFXStrategy::SellResult::OverLowRate == s.jedgeSell(ASK * (1.0 + L + each)) && "assert judge sell in the currentRate.");
 				}
 			}
 		}
@@ -248,6 +245,7 @@ int main() {
 	}
 
 	rate();
+	return 0;
 	testRateStrategy();
 	testLearningStrategy();
 	return 0;
