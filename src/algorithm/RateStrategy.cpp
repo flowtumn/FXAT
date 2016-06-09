@@ -1,17 +1,18 @@
 ﻿#include "fx/algorithm/RateStrategy.h"
 #include "fx/data/FXInfo.h"
 
-#include <sstream>
-
 using namespace flowTumn;
 
 namespace {
+	const auto SCALE = 10000000000000;
+	const auto SUPPORT_DIGIT = 1.0 / SCALE;
+	const auto ROUND = (SUPPORT_DIGIT / 10.0) * 5.0;
+
 	inline uint64_t scale(double v) {
-		round(v);
-		auto r = v + 0.00000000000000005;
-		return static_cast <uint64_t > ((v + 0.00000000000000005) * 10000000000000000);
+		return static_cast <uint64_t> ((v + ROUND) * SCALE);
 	}
 }
+
 
 RateStrategy::RateStrategy(double rateHigh, double rateLow)
 	: rateHigh_(rateHigh)
@@ -68,4 +69,8 @@ IFXStrategy::SellResult RateStrategy::jedgeSell(double ask) const {
 
 	return IFXStrategy::SellResult::None;
 
+}
+
+double RateStrategy::supportPercentage() const {
+	return SUPPORT_DIGIT;
 }

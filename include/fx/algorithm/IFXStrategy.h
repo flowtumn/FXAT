@@ -39,6 +39,9 @@ namespace flowTumn {
 
 		// 売っても良いか？
 		virtual SellResult jedgeSell(double ask) const = 0;
+
+		// サポートしている percentage
+		virtual double supportPercentage() const = 0;
 	};
 };
 
