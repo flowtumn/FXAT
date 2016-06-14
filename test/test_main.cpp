@@ -18,15 +18,13 @@
   #define __ASSERT(x) assertR(x)
 #endif
 
-void rate() {
+void testSimpleRate() {
 	const auto H = 0.1;
 	const auto L = 0.2;
 	flowTumn::RateStrategy s(H, L);
 
-	auto v = flowTumn::factoryFXBid(100.00);
-
 	//この値段で買ったとする。
-	const auto ASK = v.bid;
+	auto v = flowTumn::factoryFXBid(100.00);
 
 	//現値を更新。
 	s.updateBidAsk(v);
@@ -210,12 +208,6 @@ void testRateStrategy() {
 				}
 
 				//損切してよい。
-				switch (s.jedgeSell(ASK * (1.0 + L))) {
-				case flowTumn::IFXStrategy::SellResult::None:
-					s.jedgeSell(ASK * (1.0 + L));
-					break;
-				}
-
 				__ASSERT(flowTumn::IFXStrategy::SellResult::OverLowRate== s.jedgeSell(ASK * (1.0 + L)) && "assert judge sell in the currentRate.");
 
 				//LowRateを大きくしているので、これも当然売ってよい。
@@ -242,20 +234,8 @@ void testLearningStrategy() {
 
 }
 
-#include <unordered_map>
 int main() {
-	std::unordered_map <double, int64_t> v1, v2, v3, v4;
-
-	for (double i = 70.000; i <= 150.00; i += 0.001) {
-		++v1[i];
-		++v2[i];
-		++v3[i];
-		++v4[i];
-	}
-
-	rate();
-	testRateStrategy();
-	return 0;
+	testSimpleRate();
 	testRateStrategy();
 	testLearningStrategy();
 	return 0;

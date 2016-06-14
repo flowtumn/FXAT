@@ -32,7 +32,8 @@ namespace flowTumn {
 			open,
 			close,
 			high,
-			low
+			low,
+			""
 		};
 	}
-}
+};

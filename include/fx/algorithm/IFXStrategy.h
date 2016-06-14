@@ -1,10 +1,9 @@
 ﻿#ifndef IFXSTRATEGY_H_INCLUDE__
 #define IFXSTRATEGY_H_INCLUDE__
 
-namespace flowTumn {
-	struct FXBidAsk;
-	struct FXInfo;
+#include "fx/data/FXInfo.h"
 
+namespace flowTumn {
 	/**
 	 * 買い、売りのStrategy。
 	 */

@@ -2,13 +2,13 @@
 #define EVALUATESTRATEGYCLIENT_H_INCLUDE__
 
 #include <cstdint>
+#include <iostream>
 #include <type_traits>
 #include "fx/algorithm/IFXStrategy.h"
+#include "fx/data/FXInfo.h"
 #include "fx/repository/IFXRepository.h"
 
 namespace flowTumn {
-	struct FXBidAsk;
-
 	/**
 	 * 戦略を評価するクライアント。
 	 * (自発的にデータを取得ではなく、評価するデータは外から与える)

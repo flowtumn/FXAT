@@ -2,7 +2,6 @@
 #define RATESTRATEGY_H_INCLUDE__
 
 #include <atomic>
-#include "fx/data/FXInfo.h"
 #include "IFXStrategy.h"
 
 namespace flowTumn {

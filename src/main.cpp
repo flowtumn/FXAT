@@ -108,7 +108,7 @@ void simulation(const flowTumn::tstr& csv, double H, double L) {
 			double r{ 0.0 };
 			for (auto&& each : ordered) {
 				int64_t v;
-				double total;
+				double total{0.0};
 				r += total;
 				std::tie(v, total) = each.second;
 				std::cout << each.first << ": " << " numberTimes: " << v << "   profit: " << total << std::endl;
