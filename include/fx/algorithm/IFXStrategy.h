@@ -1,10 +1,9 @@
 ﻿#ifndef IFXSTRATEGY_H_INCLUDE__
 #define IFXSTRATEGY_H_INCLUDE__
 
-namespace flowTumn {
-	struct FXBidAsk;
-	struct FXInfo;
+#include "fx/data/FXInfo.h"
 
+namespace flowTumn {
 	/**
 	 * 買い、売りのStrategy。
 	 */
@@ -35,10 +34,13 @@ namespace flowTumn {
 		virtual bool isObeyRules() const = 0;
 
 		// 買っても良いか？
-		virtual bool judgeBuy() const = 0;
+		virtual bool judgeBuy(double ask) const = 0;
 
 		// 売っても良いか？
 		virtual SellResult jedgeSell(double ask) const = 0;
+
+		// サポートしている percentage
+		virtual double supportPercentage() const = 0;
 	};
 };
 

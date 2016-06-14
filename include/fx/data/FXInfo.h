@@ -2,6 +2,7 @@
 #define FX_INFO_H_INCLUDE__
 
 #include <cstdint>
+#include <string>
 
 namespace flowTumn {
 	struct FXBidAsk {
@@ -16,6 +17,7 @@ namespace flowTumn {
 		double rateClose;
 		double rateHigh;
 		double rateLow;
+		std::string description;
 	};
 
 	/**

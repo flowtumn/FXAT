@@ -2,19 +2,21 @@
 #define EVALUATESTRATEGYCLIENT_H_INCLUDE__
 
 #include <cstdint>
+#include <iostream>
 #include <type_traits>
 #include "fx/algorithm/IFXStrategy.h"
+#include "fx/data/FXInfo.h"
+#include "fx/repository/IFXRepository.h"
 
 namespace flowTumn {
-	struct FXBidAsk;
-
 	/**
 	 * 戦略を評価するクライアント。
 	 * (自発的にデータを取得ではなく、評価するデータは外から与える)
 	 */
-	template <typename T>
+	template <typename S, typename R>
 	class EvaluateStrategyClient {
-		static_assert(std::is_base_of <flowTumn::IFXStrategy, T>::value, "L must be a descendant of IFXStrategy.");
+		static_assert(std::is_base_of <flowTumn::IFXStrategy, S>::value, "L must be a descendant of IFXStrategy.");
+		static_assert(std::is_base_of <flowTumn::IFXRepository, R>::value, "L must be a descendant of IFXRepository.");
 
 		enum struct State {
 			Buy,		// 買いたい.
@@ -31,28 +33,39 @@ namespace flowTumn {
 			, profit_(0.0)
 		{}
 
+		IFXRepository& repository() {
+			return this->repository_;
+		}
+
+		void info() const {
+			std::cout << "HighRate: " << this->strategy_.highRate() << std::endl;
+			std::cout << " LowRate: " << this->strategy_.lowRate() << std::endl;
+		}
+
 		// この高値/売値を用いて、戦略を扱い、売り・買いを実行する。
-		void simulation(const flowTumn::FXBidAsk& info) {
+		void simulation(const flowTumn::FXBidAsk& info, const std::string& description) {
 			//更新。
 			this->strategy_.updateBidAsk(info);
 
 			switch (this->state_) {
 			default:
-				break;
+				return;
 			case State::Buy:
-				if (this->strategy_.judgeBuy()) {
+				if (this->strategy_.judgeBuy(info.ask)) {
 					//買い。
 					this->boughtRate_ = info.ask;
 					++this->counterBuy_;
 
 					//売りに転じる。
 					this->state_ = State::Sell;
+
+					this->repository_.bought(info.ask, 0, description);
 				}
 				break;
 			case State::Sell:
 				switch (this->strategy_.jedgeSell(this->boughtRate_)) {
 				default:
-					break;
+					return;
 				case flowTumn::IFXStrategy::SellResult::Benefit:
 				case flowTumn::IFXStrategy::SellResult::OverHighRate:
 					//利益が出るので売り。
@@ -60,8 +73,9 @@ namespace flowTumn {
 
 					//利益。
 					this->profit_ += info.bid - this->boughtRate_;
-					this->strategy_.jedgeSell(this->boughtRate_);
 					this->state_ = State::Buy;
+
+					this->repository_.sold(info.bid, 0, description);
 					break;
 				case flowTumn::IFXStrategy::SellResult::Loss:
 				case flowTumn::IFXStrategy::SellResult::OverLowRate:
@@ -72,6 +86,8 @@ namespace flowTumn {
 					this->profit_ += info.bid - this->boughtRate_;
 
 					this->state_ = State::Buy;
+
+					this->repository_.sold(info.bid, 0, description);
 					break;
 				}
 				break;
@@ -106,7 +122,8 @@ namespace flowTumn {
 		}
 
 	private:
-		T strategy_;
+		S strategy_;
+		R repository_;
 		int64_t counterBuy_;
 		int64_t counterSellHigh_;
 		int64_t counterSellLow_;

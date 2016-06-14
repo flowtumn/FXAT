@@ -3,12 +3,23 @@
 
 using namespace flowTumn;
 
+namespace {
+	const auto SCALE = 10000000000000;
+	const auto SUPPORT_DIGIT = 1.0 / SCALE;
+	const auto ROUND = (SUPPORT_DIGIT / 10.0) * 5.0;
+
+	inline uint64_t scale(double v) {
+		return static_cast <uint64_t> ((v + ROUND) * SCALE);
+	}
+}
+
+
 RateStrategy::RateStrategy(double rateHigh, double rateLow)
-	: rateHigh_(rateHigh / 100.0)
-	, rateLow_(rateLow / 100.0)
+	: rateHigh_(rateHigh)
+	, rateLow_(rateLow)
 {}
 
-void RateStrategy::learning(const FXInfo& info) {
+void RateStrategy::learning(const FXInfo&) {
 }
 
 void RateStrategy::updateBidAsk(const FXBidAsk& info) {
@@ -16,11 +27,11 @@ void RateStrategy::updateBidAsk(const FXBidAsk& info) {
 }
 
 double RateStrategy::highRate() const {
-	return this->rateHigh_ * 100.0;
+	return this->rateHigh_;
 }
 
 double RateStrategy::lowRate() const {
-	return this->rateLow_ * 100.0;
+	return this->rateLow_;
 }
 
 //この戦略はRateで売り買いするRuleの規則に従う。
@@ -29,34 +40,37 @@ bool RateStrategy::isObeyRules() const {
 }
 
 //Rateで売る事が重視するので、買うタイミングはいつでも良い。
-bool RateStrategy::judgeBuy() const {
+bool RateStrategy::judgeBuy(double) const {
 	return true;
 }
 
 //askを買値とした場合、売るべきか？
 IFXStrategy::SellResult RateStrategy::jedgeSell(double ask) const {
+
 	//現在の目安となる売値。
-	const auto nowBidRate = this->fxInfo_.load().bid;
+	const auto bidRate = this->fxInfo_.load().bid;
 
-	if (nowBidRate < ask) {
-		// 買値より下がってる。
-		auto diff = ask - nowBidRate;
-		auto l = ask * this->rateLow_;
+	//買値より売値は高い。
+	if (bidRate >= ask) {
+		const auto r = static_cast <double> (bidRate - ask) / bidRate;
 
-		//最低レートを下回った、損切りすべき。
-		if (l <= diff) {
-			return IFXStrategy::SellResult::OverLowRate;
+		//売った時の差が、計算した利益を超えるなら売り。
+		if (scale(this->rateHigh_) <= scale(r)) {
+			return IFXStrategy::SellResult::OverHighRate;
 		}
 	} else {
-		// 買値より高い。
-		auto diff = nowBidRate - ask;
-		auto h = ask * this->rateHigh_;
+		const auto r = static_cast <double> (ask - bidRate) / bidRate;
 
-		//最大レートを上まった、問答無用で売る。
-		if (h <= diff) {
-			return IFXStrategy::SellResult::OverHighRate;
+		//売った時の差が、計算した損益を超えるなら売り。
+		if (scale(this->rateLow_) <= scale(r)) {
+			return IFXStrategy::SellResult::OverLowRate;
 		}
 	}
 
 	return IFXStrategy::SellResult::None;
+
+}
+
+double RateStrategy::supportPercentage() const {
+	return SUPPORT_DIGIT;
 }

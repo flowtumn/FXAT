@@ -2,7 +2,6 @@
 #define RATESTRATEGY_H_INCLUDE__
 
 #include <atomic>
-#include "fx/data/FXInfo.h"
 #include "IFXStrategy.h"
 
 namespace flowTumn {
@@ -18,8 +17,9 @@ namespace flowTumn {
 		double highRate() const override;
 		double lowRate() const override;
 		bool isObeyRules() const override;
-		bool judgeBuy() const override;
+		bool judgeBuy(double ask) const override;
 		IFXStrategy::SellResult jedgeSell(double ask) const override;
+		double supportPercentage() const override;
 
 	protected:
 		const double rateHigh_;

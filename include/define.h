@@ -46,6 +46,9 @@ namespace flowTumn {
     return std::atol(conv(s).data());
   }
 
+  inline double toDouble(const tstr& s) {
+	  return std::atof(conv(s).data());
+  }
 
 };
 
